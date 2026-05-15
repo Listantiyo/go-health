@@ -17,6 +17,9 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `{"status":"ok","service":"pos-api","version":"1.0.0"}`)
 	})
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Health Running ❤️")
+	})
 
 	fmt.Printf("Server starting on :%s\n", port)
 	if err := http.ListenAndServe(":"+port, nil); err != nil {

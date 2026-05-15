@@ -1,13 +1,9 @@
-FROM golang:1.24-alpine AS builder
+FROM golang:1.26.3-alpine AS builder
 WORKDIR /app
-COPY go.mod ./
-RUN go mod tidy
-COPY main.go .
-RUN CGO_ENABLED=0 GOOS=linux go build -o server .
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o health .
 
-FROM alpine:latest
+FROM alpine:3.22.4
 WORKDIR /root/
-COPY --from=builder /app/server .
-EXPOSE 8080
-ENV PORT=8080
-CMD ["./server"]
+COPY --from=builder /app/health .
+CMD ["./health"]
