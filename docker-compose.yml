@@ -1,5 +1,6 @@
 services:
   app:
+    image: go-health:1.0
     build: .
     container_name: go-health-container
     restart: always
